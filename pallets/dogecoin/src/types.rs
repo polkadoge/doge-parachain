@@ -1,4 +1,5 @@
 pub use primitive_types::{H160, H256, U256};
+use crate::script::Script;
 
 /// Represents a bitcoin 32 bytes hash digest encoded in little-endian
 #[derive(Encode, Decode, Default, PartialEq, Eq, Clone, Copy, Debug)]
@@ -25,6 +26,36 @@ pub struct BlockHeader {
 
 pub struct Block {
 
+}
+
+pub struct Transaction {
+    pub version: i32,
+    pub inputs: Vec<TransactionInput>,
+    pub outputs: Vec<TransactionOutput>,
+    pub locktime: u32,
+}
+
+/// An outpoint - a combination of a transaction hash and an index n into its vout
+pub struct OutPoint {
+    pub hash: H256Le,
+    pub n: u32,
+}
+
+/// https://github.com/polkadoge/dogecoin/blob/master/src/primitives/transaction.h#L62
+/// An input of a transaction. It contains the location of the previous transaction's
+/// output that it claims and a signature that matches the output's public key
+pub struct TransactionInput {
+    pub pre_vout: OutPoint,
+    /// https://github.com/polkadoge/dogecoin/blob/master/src/script/script.h#L373
+    pub script_sig: Vec<u8>,
+    pub sequence: u32,
+    pub witness: Vec<Vec<u8>>,
+}
+
+/// Dogecoin transaction output
+pub struct TransactionOutput {
+    pub value: i64,
+    pub script_pub_key: Script,
 }
 
 /// Dogecoin Script OpCodes

@@ -1,5 +1,5 @@
 mod types;
-
+mod script;
 
 #[cfg(test)]
 mod tests {
