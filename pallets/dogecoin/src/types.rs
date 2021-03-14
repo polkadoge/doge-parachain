@@ -21,18 +21,19 @@ pub struct PureBlockHeader {
 /// https://github.com/dogecoin/dogecoin/blob/master/src/primitives/block.h
 pub struct BlockHeader {
     pub pure_block_header: PureBlockHeader,
-    // todo
+    // todo auxpow
 }
 
 pub struct Block {
-
+    header: BlockHeader,
+    transactions: Vec<Transaction>,
 }
 
 pub struct Transaction {
     pub version: i32,
     pub inputs: Vec<TransactionInput>,
     pub outputs: Vec<TransactionOutput>,
-    pub locktime: u32,
+    pub lock_time: u32,
 }
 
 /// An outpoint - a combination of a transaction hash and an index n into its vout
